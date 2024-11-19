@@ -1,0 +1,23 @@
+{
+  "name": "@plugins.rapidjs.org/pageframe",
+  "version": "0.1.0",
+  "author": "Thassilo Martin Schiepanski",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "rjs-plugin"
+  ],
+  "main": "plugin/plugin.js",
+  "scripts": {
+    "prepare": "npm i -D @rapidjs.org/rjs",
+    "test": "echo \"TODO: Implement tests\" && exit 1",
+    "test-app": "npx rjs serve -D -W ./test-app --stacktrace",
+    "test-app:view": "open http://localhost:7777"
+  },
+  "devDependencies": {
+    "@rapidjs.org/rjs": "^0.4.1"
+  },
+  "dependencies": {
+    "html-prettify": "^1.0.7"
+  }
+}
