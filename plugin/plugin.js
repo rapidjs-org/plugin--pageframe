@@ -1,6 +1,10 @@
 import prettify from "html-prettify";
 
 
+function findInsertIndex(html, tagName) {
+    return Math.max(0, html.search(new RegExp(`</${tagName}(\\s[^>]*)?>`, "i")));
+}
+
 function matchTag(html, tagName) {
     return (
         html.match(
@@ -20,10 +24,6 @@ function injectHtml(targetHtml, injectionHtml, index) {
 
 export default async function(rJS, filesystem) {
     const frameHtml = filesystem.get("_frame.html").contents;
-    const frameIndexes = {
-        head: frameHtml.search(/<\/head(\s[^>]*)?>/i),
-        main: frameHtml.search(/<\/main(\s[^>]*)?>/i)
-    };
     
     const files = [];
     filesystem
@@ -37,8 +37,8 @@ export default async function(rJS, filesystem) {
                     );
         
         let html = frameHtml;
-        html = injectHtml(html, headHtml, frameIndexes.head);
-        html = injectHtml(html, mainHtml, frameIndexes.main);
+        html = injectHtml(html, headHtml, findInsertIndex(html, "head"));
+        html = injectHtml(html, mainHtml, findInsertIndex(html, "main"));
         files.push(
             new rJS.File(
                 file.relativePath.replace(/^\.?\/?pages\//, ""),
